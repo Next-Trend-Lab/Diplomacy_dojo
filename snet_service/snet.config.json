@@ -1,0 +1,38 @@
+{
+    "service_id": "ai-diplomacy-dojo",
+    "display_name": "AI Diplomacy Dojo: Negotiation Simulator",
+    "description": "Practice your negotiation skills against AI agents with distinct personalities. Get feedback on your diplomatic performance.",
+    "project_url": "https://github.com/yourusername/ai-diplomacy-toolkit",
+    "github_url": "https://github.com/yourusername/ai-diplomacy-toolkit",
+    "protocol": "gRPC",
+    "service_type": "AI",
+    "tags": ["negotiation", "diplomacy", "conflict-resolution", "training", "llm"],
+    "pricing": [
+      {
+        "price": 10,
+        "unit": "AGIX",
+        "type": "session",
+        "description": "Cost per negotiation practice session"
+      }
+    ],
+    "groups": [
+      {
+        "group_name": "default",
+        "pricing": [
+          {
+            "price": 10,
+            "unit": "AGIX",
+            "type": "session",
+            "description": "Cost per negotiation practice session"
+          }
+        ],
+        "endpoints": ["http://your_service_endpoint:50051"]
+      }
+    ],
+    "model_parameters": {
+      "llm_model": "llama3",
+      "temperature": 0.7
+    },
+    "proto_files": ["negotiation.proto"],
+    "demo_url": "http://your_demo_frontend_url"
+  }

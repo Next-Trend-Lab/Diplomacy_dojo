@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package negotiation_service;
+
+// Define the Negotiation Session Request
+message StartNegotiationRequest {
+  string scenario_id = 1; // E.g., "border_dispute_1"
+  string user_persona = 2; // How the user defines their role (e.g., "Mediator", "Country A Representative")
+  repeated NegotiatorDetails ai_negotiators = 3; // Details for each AI opponent
+}
+
+// Details for an AI negotiator
+message NegotiatorDetails {
+  string id = 1; // Unique ID for the AI (e.g., "country_b_ai")
+  string persona_type = 2; // E.g., "hardliner", "compromiser"
+  string initial_stance = 3; // A brief description of their starting position
+}
+
+// Represents a turn in the negotiation
+message NegotiationTurn {
+  string session_id = 1;
+  string speaker_id = 2; // "user" or the AI negotiator's ID
+  string message = 3; // The spoken/typed message
+}
+
+// Response for a negotiation turn, containing AI responses
+message NegotiationResponse {
+  string session_id = 1;
+  repeated NegotiationTurn ai_responses = 2; // List of AI replies for this turn
+  string current_status = 3; // Brief status of negotiation (e.g., "ongoing", "agreement reached", "stalemate")
+  repeated string agreed_points = 4; // List of points agreed upon so far
+  string next_action_hint = 5; // Hint for the user (e.g., "Propose a compromise on X", "Clarify point Y")
+}
+
+// Service to provide post-negotiation feedback
+message GetFeedbackRequest {
+  string session_id = 1;
+}
+
+// Post-negotiation feedback
+message GetFeedbackResponse {
+  string session_id = 1;
+  string feedback_summary = 2; // Overall performance summary
+  repeated string specific_suggestions = 3; // Actionable tips for improvement
+  string final_outcome = 4; // E.g., "Agreement Reached", "No Agreement"
+}
+
+service NegotiationService {
+  rpc StartNegotiation (StartNegotiationRequest) returns (NegotiationResponse);
+  rpc SubmitUserTurn (NegotiationTurn) returns (NegotiationResponse);
+  rpc GetFeedback (GetFeedbackRequest) returns (GetFeedbackResponse);
+}
