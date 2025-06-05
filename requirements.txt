@@ -1,6 +1,11 @@
-fastapi
-uvicorn[standard]
-python-dotenv
-httpx  # For async HTTP requests to Ollama
-pydantic # FastAPI dependency, good to include explicitly
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+httpx==0.27.0
+python-dotenv==1.0.1
+pydantic==2.7.1
+google-cloud-aiplatform==1.49.0  # For Vertex AI (Gemini LLM)
+google-cloud-speech==2.25.0      # For Speech-to-Text
+google-cloud-texttospeech==2.18.0 # For Text-to-Speech
+streamlit
+streamlit_mic_recorder   # For microphone input in Streamlit
 protobuf # For SingularityNET .proto compilation

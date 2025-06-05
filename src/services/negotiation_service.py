@@ -38,11 +38,11 @@ class NegotiationService:
         # Start LLM sessions for each AI and get initial greetings
         for ai_info in ai_negotiators:
             ai_id = ai_info["id"]
-            # A new LLMAgent instance for each AI ensures independent conversation history
-            ai_llm_instance = LLMAgent()
-            ai_llm_instance.set_system_instructions(system_instructions_map[ai_id])
+            # A new LLMAgent instance for each AI, passing system instructions at initialization
+            ai_llm_instance = LLMAgent(system_instruction=system_instructions_map[ai_id])
             
             # Start session with initial context (system instructions will be part of the first prompt)
+            # System instructions are now handled by the model itself.
             ai_llm_instance.start_new_session() 
             ai_llm_configs[ai_id] = ai_llm_instance
 
@@ -176,7 +176,7 @@ class NegotiationService:
         
         # Create a temporary LLM for feedback (doesn't need to be part of the session's AI configs)
         feedback_llm = LLMAgent()
-        feedback_llm.start_new_session() # Start a session for feedback generation
+        feedback_llm.start_new_session() 
         
         try:
             feedback_response_json_str = feedback_llm.generate_response(feedback_prompt + "\n\nProvide feedback in a JSON format with keys: 'final_outcome', 'feedback_summary', 'specific_suggestions' (as a list of strings).")
@@ -214,7 +214,7 @@ class NegotiationService:
         )
 
         facilitator_llm = LLMAgent()
-        facilitator_llm.start_new_session()
+        facilitator_llm.start_new_session() 
 
         try:
             raw_response = facilitator_llm.generate_response(analysis_prompt)
